@@ -3,7 +3,7 @@ require 'rails'
 require 'simple_captcha'
 
 module SimpleCaptcha
-  class Railtie < ::Rails::Railtie
+  class Railtie < ::Rails::Engine
     config.before_initialize do
       ActiveSupport.on_load :active_record do
         ActiveRecord::Base.send(:include, SimpleCaptcha::ModelHelpers)
@@ -17,6 +17,10 @@ module SimpleCaptcha
       if Object.const_defined?("Formtastic")
         Formtastic::SemanticFormHelper.builder = SimpleCaptcha::CustomFormBuilder
       end
+    end
+    
+    generators do
+      require "lib/generators/simple_captcha_generator"
     end
   end
 end
