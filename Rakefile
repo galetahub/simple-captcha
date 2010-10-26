@@ -25,7 +25,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "simple_captcha"
-    gemspec.version = '0.1.0'
+    gemspec.version = '0.1.1'
     gemspec.summary = "SimpleCaptcha is the simplest and a robust captcha plugin."
     gemspec.description = "SimpleCaptcha is available to be used with Rails 3 or above and also it provides the backward compatibility with previous versions of Rails."
     gemspec.email = "superp1987@gmail.com"

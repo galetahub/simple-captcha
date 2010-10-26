@@ -18,10 +18,6 @@ module SimpleCaptcha
         Formtastic::SemanticFormHelper.builder = SimpleCaptcha::CustomFormBuilder
       end
     end
-    
-    generators do
-      require "lib/generators/simple_captcha_generator"
-    end
   end
 end
 
