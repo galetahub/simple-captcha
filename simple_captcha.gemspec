@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Pavlo Galeta", "Igor Galeta"]
-  s.date = %q{2010-10-21}
+  s.date = %q{2010-10-26}
   s.description = %q{SimpleCaptcha is available to be used with Rails 3 or above and also it provides the backward compatibility with previous versions of Rails.}
   s.email = %q{superp1987@gmail.com}
   s.extra_rdoc_files = [
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
     "README.rdoc",
      "Rakefile",
      "app/controllers/simple_captcha_controller.rb",
-     "app/models/simple_captcha_data.rb",
      "config/routes.rb",
      "lib/generators/USAGE",
      "lib/generators/simple_captcha_generator.rb",
@@ -32,6 +31,7 @@ Gem::Specification.new do |s|
      "lib/simple_captcha/formtastic.rb",
      "lib/simple_captcha/image.rb",
      "lib/simple_captcha/railtie.rb",
+     "lib/simple_captcha/simple_captcha_data.rb",
      "lib/simple_captcha/utils.rb",
      "lib/simple_captcha/view.rb",
      "test/simple_captcha_test.rb"
