@@ -80,7 +80,7 @@ module SimpleCaptcha #:nodoc
         code_type = options[:code_type]
         
         value = generate_simple_captcha_data(code_type)
-        data = SimpleCaptchaData.get_data(key)
+        data = SimpleCaptcha::SimpleCaptchaData.get_data(key)
         data.value = value
         data.save
         key

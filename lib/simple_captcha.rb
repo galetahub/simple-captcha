@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 module SimpleCaptcha
   autoload :Utils,             'simple_captcha/utils'
   
@@ -9,6 +10,8 @@ module SimpleCaptcha
   
   autoload :FormBuilder,       'simple_captcha/form_builder'
   autoload :CustomFormBuilder, 'simple_captcha/formtastic'
+  
+  autoload :SimpleCaptchaData, 'simple_captcha/simple_captcha_data'
   
   mattr_accessor :image_size
   @@image_size = "100x28"

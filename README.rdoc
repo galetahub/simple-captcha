@@ -105,6 +105,8 @@ SimpleCaptcha detects if your use Formtastic and appends "SimpleCaptcha::CustomF
     
 * *object* - the name of the object of the model class, to implement the model based captcha.
 
+* *code_type* - return numeric only if set to 'numeric'
+
 ===Global options
 
 * *image_style* - provides the specific image style for the captcha image.
