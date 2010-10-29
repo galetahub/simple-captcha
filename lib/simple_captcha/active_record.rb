@@ -58,7 +58,7 @@ module SimpleCaptcha #:nodoc
           SimpleCaptcha::Utils::simple_captcha_passed!(captcha_key)
           return true
         else
-          message = simple_captcha_options[:message] || I18n.t(self.class.model_name.downcase, :scope => [:simple_captcha, :message], :default => 'default')
+          message = simple_captcha_options[:message] || I18n.t(self.class.model_name.downcase, :scope => [:simple_captcha, :message], :default => :default)
           simple_captcha_options[:add_to_base] ? errors.add_to_base(message) : errors.add(:captcha, message)
           return false
         end
