@@ -187,6 +187,13 @@ You can change the CSS of the SimpleCaptcha DOM elements as per your need in thi
     apply_simple_captcha :message => "The secret Image and code were different", :add_to_base => true
   end
 
+==I18n
+
+  simple_captcha:
+    message:
+      default: "Secret Code did not match with the Image"
+      user: "The secret Image and code were different"
+
 ==Who's who?
 
 Enjoy the simplest captcha implementation.

@@ -30,10 +30,7 @@ module SimpleCaptcha #:nodoc
     #  @user.save                # when captcha validation is not required.
     module SingletonMethods
       def apply_simple_captcha(options = {})
-        options = {
-            :add_to_base => false,
-            :message => "Secret Code did not match with the Image"
-          }.merge(options)
+        options = { :add_to_base => false }.merge(options)
                   
         write_inheritable_attribute :simple_captcha_options, options
         class_inheritable_reader :simple_captcha_options
@@ -61,10 +58,8 @@ module SimpleCaptcha #:nodoc
           SimpleCaptcha::Utils::simple_captcha_passed!(captcha_key)
           return true
         else
-          simple_captcha_options[:add_to_base] == true ?
-              self.errors.add_to_base(simple_captcha_options[:message]) :
-              self.errors.add(:captcha, simple_captcha_options[:message])
-              
+          message = simple_captcha_options[:message] || I18n.t(self.class.model_name.downcase, :scope => [:simple_captcha, :message], :default => 'default')
+          simple_captcha_options[:add_to_base] ? errors.add_to_base(message) : errors.add(:captcha, message)
           return false
         end
       end
