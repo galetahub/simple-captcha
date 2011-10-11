@@ -32,8 +32,8 @@ module SimpleCaptcha #:nodoc
       def apply_simple_captcha(options = {})
         options = { :add_to_base => false }.merge(options)
                   
-        write_inheritable_attribute :simple_captcha_options, options
-        class_inheritable_reader :simple_captcha_options
+        class_attribute :simple_captcha_options
+        self.simple_captcha_options = options
         
         unless self.is_a?(ClassMethods)
           include InstanceMethods

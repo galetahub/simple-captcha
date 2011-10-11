@@ -1,5 +1,5 @@
 module SimpleCaptcha
-  class CustomFormBuilder < Formtastic::SemanticFormBuilder
+  class CustomFormBuilder < Formtastic::FormBuilder
 
     private
 
