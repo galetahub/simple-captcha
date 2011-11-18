@@ -9,16 +9,16 @@ module SimpleCaptcha
         ActiveRecord::Base.send(:include, SimpleCaptcha::ModelHelpers)
       end
     end
-    
+
     config.after_initialize do
       ActionView::Base.send(:include, SimpleCaptcha::ViewHelper)
       ActionView::Helpers::FormBuilder.send(:include, SimpleCaptcha::FormBuilder)
-      
+
       if Object.const_defined?("Formtastic")
-        Formtastic::SemanticFormHelper.builder = SimpleCaptcha::CustomFormBuilder
+        Formtastic::Helpers::FormHelper.builder = SimpleCaptcha::CustomFormBuilder
       end
     end
-    
+
     config.app_middleware.use SimpleCaptcha::Middleware
   end
 end
