@@ -1,3 +1,4 @@
+require 'tempfile'
 module SimpleCaptcha #:nodoc
   module ImageHelpers #:nodoc
 
