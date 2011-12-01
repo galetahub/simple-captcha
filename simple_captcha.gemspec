@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "simple_captcha/version"
 
 Gem::Specification.new do |s|
-  s.name = "galetahub-simple_captcha"
+  s.name = "simple_captcha"
   s.version = SimpleCaptcha::VERSION.dup
   s.platform = Gem::Platform::RUBY 
   s.summary = "SimpleCaptcha is the simplest and a robust captcha plugin."
