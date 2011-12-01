@@ -1,11 +1,16 @@
 module SimpleCaptcha
-  class CustomFormBuilder < Formtastic::FormBuilder
+  class CustomFormBuilder
+    def self.included(base)
+      base.send(:include, InstanceMethods)
+    end
 
-    private
+    module InstanceMethods
+      include SimpleCaptha::ViewHelper
 
-    def simple_captcha_input(method, options)
-      options.update :object => sanitized_object_name
-      self.send(:show_simple_captcha, options)
+      def simple_captcha_input(method, options)
+        options.update :object => sanitized_object_name
+        self.send(:show_simple_captcha, options)
+      end
     end
   end
 end
