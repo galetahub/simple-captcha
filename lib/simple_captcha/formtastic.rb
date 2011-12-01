@@ -1,11 +1,11 @@
 module SimpleCaptcha
-  class CustomFormBuilder
+  module FormtasticFormBuilder
     def self.included(base)
       base.send(:include, InstanceMethods)
     end
 
     module InstanceMethods
-      include SimpleCaptha::ViewHelper
+      include SimpleCaptcha::ViewHelper
 
       def simple_captcha_input(method, options)
         options.update :object => sanitized_object_name
