@@ -15,7 +15,11 @@ module SimpleCaptcha
       ActionView::Helpers::FormBuilder.send(:include, SimpleCaptcha::FormBuilder)
 
       if Object.const_defined?("Formtastic")
-        Formtastic::Helpers::FormHelper.builder = SimpleCaptcha::CustomFormBuilder
+        if Formtastic.const_defined?("Helpers")
+          Formtastic::Helpers::FormHelper.builder = SimpleCaptcha::CustomFormBuilder
+        else
+          Formtastic::SemanticFormHelper.builder = SimpleCaptcha::CustomFormBuilder
+        end
       end
     end
 
