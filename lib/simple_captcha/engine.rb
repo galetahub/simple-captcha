@@ -21,6 +21,12 @@ module SimpleCaptcha
           Formtastic::SemanticFormHelper.builder = SimpleCaptcha::CustomFormBuilder
         end
       end
+
+      if Object.const_defined?("SimpleForm")
+        class SimpleForm::FormBuilder
+          map_type :simple_captcha, :to => SimpleCaptcha::CaptchaSimpleFormInput
+        end
+      end
     end
 
     config.app_middleware.use SimpleCaptcha::Middleware
