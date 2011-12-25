@@ -65,11 +65,15 @@ module SimpleCaptcha #:nodoc
       end
       
       def save_with_captcha(options = {})
-        valid_with_captcha? && save({:validate => false}.merge(options))
+        valid_with_captcha? && save({:validate => false, :without_capthca => true}.merge(options))
       end
 
       def save(options = {})
-        simple_captcha_options[:always_check] ? save_with_captcha(options) : super(options)
+        if options[:without_capthca]
+          super options.delete(:without_capthca)
+        else
+          simple_captcha_options[:always_check] ? save_with_captcha(options) : super(options)
+        end
       end
     end
   end
