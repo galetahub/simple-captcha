@@ -71,9 +71,15 @@ module SimpleCaptcha #:nodoc
 
       def save(options = {})
         if options[:without_capthca]
-          super options.delete(:without_capthca)
+          super({:validate => false})# options.delete(:without_capthca)
         else
-          simple_captcha_options[:always_check] ? save_with_captcha(options) : super(options)
+          if simple_captcha_options[:always_check] &&
+             ( simple_captcha_options[:on].blank? ||
+               (simple_captcha_options[:on].include?(:create) && self.new_record?))
+            save_with_captcha(options)
+          else
+            super(options) 
+          end
         end
       end
     end
