@@ -68,7 +68,7 @@ module SimpleCaptcha #:nodoc
         params << "-pointsize 22"
         params << "-implode 0.2"
 
-        dst = RUBY_VERSION < '1.9' ? Tempfile.new('simple_captcha.jpg') : Tempfile.new(['simple_captcha', '.jpg'])
+        dst = Tempfile.new(RUBY_VERSION < '1.9' ? 'simple_captcha.jpg' : ['simple_captcha', '.jpg'], SimpleCaptcha.tmp_path)
         dst.binmode
 
         params << "label:#{text} '#{File.expand_path(dst.path)}'"

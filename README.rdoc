@@ -166,6 +166,13 @@ You can provide the path where image_magick is installed as well:
     sc.image_magick_path = '/usr/bin' # you can check this from console by running: which convert
   end
 
+You can provide the path where should be stored tmp files.
+It's usefull when you dont have acces to /tmp (default directory)
+
+  SimpleCaptcha.setup do |sc|
+    sc.tmp_path = '/tmp' # or somewhere in project eg. Rails.root.join('tmp/simple_captcha').to_s, make shure directory exists
+  end
+
 
 ===How to change the CSS for SimpleCaptcha DOM elements?
 You can change the CSS of the SimpleCaptcha DOM elements as per your need in this file.

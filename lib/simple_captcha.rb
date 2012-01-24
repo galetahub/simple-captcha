@@ -40,6 +40,10 @@ module SimpleCaptcha
   mattr_accessor :image_magick_path
   @@image_magick_path = ''
 
+  # tmp directory
+  mattr_accessor :tmp_path
+  @@tmp_path = nil
+
   def self.add_image_style(name, params = [])
     SimpleCaptcha::ImageHelpers.image_styles.update(name.to_s => params)
   end
