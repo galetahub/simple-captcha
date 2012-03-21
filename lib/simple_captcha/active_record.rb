@@ -54,6 +54,8 @@ module SimpleCaptcha #:nodoc
       end
       
       def is_captcha_valid?
+        return true if Rails.env.test?
+
         if captcha && captcha.upcase.delete(" ") == SimpleCaptcha::Utils::simple_captcha_value(captcha_key)
           SimpleCaptcha::Utils::simple_captcha_passed!(captcha_key)
           return true
