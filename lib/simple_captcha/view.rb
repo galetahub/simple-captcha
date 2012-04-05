@@ -69,10 +69,10 @@ module SimpleCaptcha #:nodoc
       
       def simple_captcha_field(options={})
         if options[:object]
-          text_field(options[:object], :captcha, :value => '', :autocomplete => 'off') +
+          text_field(options[:object], :captcha, :autocomplete => 'off', :value => '', :placeholder => options[:placeholder]) +
           hidden_field(options[:object], :captcha_key, {:value => options[:field_value]})
         else
-          text_field_tag(:captcha, nil, :autocomplete => 'off')
+          text_field_tag(:captcha, nil, :autocomplete => 'off', :placeholder => options[:placeholder])
         end
       end
 
