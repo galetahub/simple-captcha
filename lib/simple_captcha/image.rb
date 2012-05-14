@@ -2,34 +2,24 @@ require 'tempfile'
 module SimpleCaptcha #:nodoc
   module ImageHelpers #:nodoc
 
-    mattr_accessor :image_styles
-    @@image_styles = {
-      'embosed_silver'  => ['-fill darkblue', '-shade 20x60', '-background white'],
-      'simply_red'      => ['-fill darkred', '-background white'],
-      'simply_green'    => ['-fill darkgreen', '-background white'],
-      'simply_blue'     => ['-fill darkblue', '-background white'],
-      'distorted_black' => ['-fill darkblue', '-edge 10', '-background white'],
-      'all_black'       => ['-fill darkblue', '-edge 2', '-background white'],
-      'charcoal_grey'   => ['-fill darkblue', '-charcoal 5', '-background white'],
-      'almost_invisible' => ['-fill red', '-solarize 50', '-background white']
-    }
+    IMAGE_STYLES = [
+      'embosed_silver',
+      'simply_red',
+      'simply_green',
+      'simply_blue',
+      'distorted_black',
+      'all_black',
+      'charcoal_grey',
+      'almost_invisible'
+    ]
 
     DISTORTIONS = ['low', 'medium', 'high']
 
     class << self
-
-      def image_params(key = 'simply_blue')
-        image_keys = @@image_styles.keys
-
-        style = begin
-          if key == 'random'
-            image_keys[rand(image_keys.length)]
-          else
-            image_keys.include?(key) ? key : 'simply_blue'
-          end
-        end
-
-        @@image_styles[style]
+      
+      def image_style(key='simply_blue')
+        return IMAGE_STYLES[rand(IMAGE_STYLES.length)] if key=='random'
+        IMAGE_STYLES.include?(key) ? key : 'simply_blue'
       end
 
       def distortion(key='low')
@@ -45,43 +35,68 @@ module SimpleCaptcha #:nodoc
       end
     end
 
-    if RUBY_VERSION < '1.9'
-      class Tempfile < ::Tempfile
-        # Replaces Tempfile's +make_tmpname+ with one that honors file extensions.
-        def make_tmpname(basename, n = 0)
-          extension = File.extname(basename)
-          sprintf("%s,%d,%d%s", File.basename(basename, extension), $$, n, extension)
+    private
+    
+      def append_simple_captcha_code #:nodoc      
+        color = @simple_captcha_image_options[:color]
+        text = Magick::Draw.new
+        text.annotate(@image, 0, 0, 0, 5, Utils::simple_captcha_value(@simple_captcha_image_options[:simple_captcha_key])) do
+          self.font_family = 'arial'
+          self.pointsize = 22
+          self.fill = color
+          self.gravity = Magick::CenterGravity
         end
       end
-    end
 
-    private
+      def set_simple_captcha_image_style #:nodoc
+        amplitude, frequency = @simple_captcha_image_options[:distortion]
+        case @simple_captcha_image_options[:image_style]
+        when 'embosed_silver'
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency).shade(true, 20, 60)
+        when 'simply_red'
+          @simple_captcha_image_options[:color] = 'darkred'
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency)
+        when 'simply_green'
+          @simple_captcha_image_options[:color] = 'darkgreen'
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency)
+        when 'simply_blue'
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency)
+        when 'distorted_black'
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency).edge(10)
+        when 'all_black'
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency).edge(2)
+        when 'charcoal_grey'
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency).charcoal
+        when 'almost_invisible'
+          @simple_captcha_image_options[:color] = 'red'
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency).solarize
+        else
+          append_simple_captcha_code
+          @image = @image.wave(amplitude, frequency)
+        end
+      end
 
-      def generate_simple_captcha_image(simple_captcha_key) #:nodoc
-        amplitude, frequency = ImageHelpers.distortion(SimpleCaptcha.distortion)
-        text = Utils::simple_captcha_value(simple_captcha_key)
-
-        params = ImageHelpers.image_params(SimpleCaptcha.image_style).dup
-        params << "-size #{SimpleCaptcha.image_size}"
-        params << "-wave #{amplitude}x#{frequency}"
-        params << "-gravity 'Center'"
-        params << "-pointsize 22"
-        params << "-implode 0.2"
-
-        dst = Tempfile.new(RUBY_VERSION < '1.9' ? 'simple_captcha.jpg' : ['simple_captcha', '.jpg'], SimpleCaptcha.tmp_path)
-        dst.binmode
-
-        fname = File.expand_path(dst.path)
-        
-        params << "label:#{text} '#{fname}'"
-
-        SimpleCaptcha::Utils::run("convert", params.join(' '))
-
-        dst.close
-        
-        File.chmod(0644, fname)
-        
-        fname
+      def generate_simple_captcha_image(simple_captcha_key)  #:nodoc
+        @image = Magick::Image.new(110, 30) do 
+          self.background_color = 'white'
+          self.format = 'JPG'
+        end
+        @simple_captcha_image_options = {
+          :simple_captcha_key => simple_captcha_key,
+          :color => 'darkblue',
+          :distortion => SimpleCaptcha::ImageHelpers.distortion(SimpleCaptcha.distortion),
+          :image_style => SimpleCaptcha::ImageHelpers.image_style(SimpleCaptcha.image_style).dup
+        }
+        set_simple_captcha_image_style      
+        @image.implode(0.2).to_blob
       end
   end
 end
