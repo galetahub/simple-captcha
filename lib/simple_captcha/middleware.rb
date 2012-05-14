@@ -44,7 +44,7 @@ module SimpleCaptcha
       end
       
       def send_file(data, options = {})
-        raise MissingFile, "Cannot read file #{path}" unless data != nil
+        raise MissingFile, "Cannot read data" unless data != nil
 
         status = options[:status] || 200
         headers = {"Content-Disposition" => "#{options[:disposition]}; filename='#{options[:filename]}'", "Content-Type" => options[:type], 'Content-Transfer-Encoding' => 'binary', 'Cache-Control' => 'private'}
