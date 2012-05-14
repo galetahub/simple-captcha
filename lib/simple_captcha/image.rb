@@ -71,14 +71,17 @@ module SimpleCaptcha #:nodoc
         dst = Tempfile.new(RUBY_VERSION < '1.9' ? 'simple_captcha.jpg' : ['simple_captcha', '.jpg'], SimpleCaptcha.tmp_path)
         dst.binmode
 
-        params << "label:#{text} '#{File.expand_path(dst.path)}'"
+        fname = File.expand_path(dst.path)
+        
+        params << "label:#{text} '#{fname}'"
 
         SimpleCaptcha::Utils::run("convert", params.join(' '))
 
         dst.close
-
-        File.expand_path(dst.path)
-        #dst
+        
+        File.chmod(0644, fname)
+        
+        fname
       end
   end
 end
