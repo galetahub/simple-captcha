@@ -43,14 +43,12 @@ module SimpleCaptcha
         request_path.include?('/simple_captcha')
       end
       
-      def send_file(path, options = {})
-        raise MissingFile, "Cannot read file #{path}" unless File.file?(path) and File.readable?(path)
-
-        options[:filename] ||= File.basename(path) unless options[:url_based_filename]
+      def send_file(data, options = {})
+        raise MissingFile, "Cannot read data" unless data != nil
 
         status = options[:status] || 200
         headers = {"Content-Disposition" => "#{options[:disposition]}; filename='#{options[:filename]}'", "Content-Type" => options[:type], 'Content-Transfer-Encoding' => 'binary', 'Cache-Control' => 'private'}
-        response_body = File.open(path, "rb")
+        response_body = data
         
         [status, headers, response_body]
       end
