@@ -64,14 +64,14 @@ module SimpleCaptcha #:nodoc
         params = ImageHelpers.image_params(SimpleCaptcha.image_style).dup
         params << "-size #{SimpleCaptcha.image_size}"
         params << "-wave #{amplitude}x#{frequency}"
-        params << "-gravity 'Center'"
+        params << "-gravity Center"
         params << "-pointsize 22"
         params << "-implode 0.2"
 
         dst = Tempfile.new(RUBY_VERSION < '1.9' ? 'simple_captcha.jpg' : ['simple_captcha', '.jpg'], SimpleCaptcha.tmp_path)
         dst.binmode
 
-        params << "label:#{text} '#{File.expand_path(dst.path)}'"
+        params << "label:#{text} #{File.expand_path(dst.path)}"
 
         SimpleCaptcha::Utils::run("convert", params.join(' '))
 
