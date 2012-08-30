@@ -33,7 +33,7 @@ module SimpleCaptcha
           #body = generate_simple_captcha_image(code)
           #headers['Content-Type'] = 'image/jpeg'
           
-          return send_file(generate_simple_captcha_image(code), :type => 'image/jpeg', :disposition => 'inline', :filename =>  'simple_captcha.jpg')
+          return send_file([generate_simple_captcha_image(code)], :type => 'image/jpeg', :disposition => 'inline', :filename =>  'simple_captcha.jpg')
         end
         
         [status, headers, body]
