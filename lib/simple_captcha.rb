@@ -6,12 +6,18 @@ module SimpleCaptcha
   autoload :ImageHelpers,      'simple_captcha/image'
   autoload :ViewHelper,        'simple_captcha/view'
   autoload :ControllerHelpers, 'simple_captcha/controller'
-  autoload :ModelHelpers,      'simple_captcha/active_record'
 
   autoload :FormBuilder,       'simple_captcha/form_builder'
   autoload :CustomFormBuilder, 'simple_captcha/formtastic'
 
-  autoload :SimpleCaptchaData, 'simple_captcha/simple_captcha_data'
+  if defined?(ActiveRecord)
+    autoload :ModelHelpers,      'simple_captcha/active_record'
+    autoload :SimpleCaptchaData, 'simple_captcha/simple_captcha_data'
+  else
+    autoload :SimpleCaptchaData,      'simple_captcha/simple_captcha_data_mongoid.rb'
+  end
+
+
   autoload :Middleware,        'simple_captcha/middleware'
 
   mattr_accessor :image_size
