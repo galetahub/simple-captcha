@@ -69,7 +69,7 @@ In the view file within the form tags write this code
 
 and in the model class add this code
 
-  class User < ActiveRecord::Basse
+  class User < ActiveRecord::Base
     apply_simple_captcha
   end
 
