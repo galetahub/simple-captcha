@@ -57,6 +57,7 @@ and in the controller's action authenticate it as
 
   if simple_captcha_valid?
     do this
+    simple_captcha_passed!
   else
     do that
   end
