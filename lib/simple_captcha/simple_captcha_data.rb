@@ -1,10 +1,7 @@
 module SimpleCaptcha
   class SimpleCaptchaData < ::ActiveRecord::Base
-    def self.rails3?
-      ::ActiveRecord::VERSION::MAJOR == 3
-    end
-
-    if rails3?
+    
+    if ::ActiveRecord::VERSION::MAJOR >= 3
       # Fixes deprecation warning in Rails 3.2:
       # DEPRECATION WARNING: Calling set_table_name is deprecated. Please use `self.table_name = 'the_name'` instead.
       self.table_name = "simple_captcha_data"
