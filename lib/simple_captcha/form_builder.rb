@@ -4,14 +4,14 @@ module SimpleCaptcha
       base.send(:include, SimpleCaptcha::ViewHelper)
       base.send(:include, SimpleCaptcha::FormBuilder::ClassMethods)
       base.send(:include, ActionView::Helpers)
-      if defined? Sprokets
+      if defined? Sprockets::Helpers
         base.send(:include, Sprockets::Helpers::RailsHelper)
         base.send(:include, Sprockets::Helpers::IsolatedHelper)
       end
-      
+
       base.delegate :render, :session, :to => :template
     end
-    
+
     module ClassMethods
       # Example:
 		  # <% form_for :post, :url => posts_path do |form| %>
@@ -23,18 +23,18 @@ module SimpleCaptcha
       	options.update :object => @object_name
       	show_simple_captcha(objectify_options(options))
       end
-      
+
       private
-        
+
         def template
           @template
         end
-        
+
         def simple_captcha_field(options={})
           html = {:autocomplete => 'off', :required => 'required', :value => ''}
           html.merge!(options[:input_html] || {})
           html[:placeholder] = options[:placeholder] || I18n.t('simple_captcha.placeholder')
-          
+
           text_field(:captcha, html) +
           hidden_field(:captcha_key, {:value => options[:field_value]})
         end

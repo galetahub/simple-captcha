@@ -1,11 +1,15 @@
-module SimpleCaptcha
-  class CustomFormBuilder < (defined?(::Formtastic::FormBuilder) ? Formtastic::FormBuilder : ::Formtastic::SemanticFormBuilder)
+if defined? Formtastic
+  require 'formtastic/version'
+  if Formtastic::VERSION < '2.2'
+    raise 'Only Formtastic Version 2.2 or greater is supported by SimpleCaptcha'
+  end
 
-    private
-
-    def simple_captcha_input(method, options)
+  class SimpleCaptchaInput
+    include Formtastic::Inputs::Base
+    def to_html
       options.update :object => sanitized_object_name
-      self.send(:show_simple_captcha, options)
+      builder.send(:show_simple_captcha, options)
     end
   end
+
 end

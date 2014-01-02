@@ -1,6 +1,10 @@
 # encoding: utf-8
 
 module SimpleCaptcha
+  class << self
+    attr_accessor :always_pass
+  end
+  self.always_pass = Rails.env.test?
   autoload :Utils,             'simple_captcha/utils'
 
   autoload :ImageHelpers,      'simple_captcha/image'

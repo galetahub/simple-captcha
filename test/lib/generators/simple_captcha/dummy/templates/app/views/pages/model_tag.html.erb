@@ -1,0 +1,8 @@
+<h1>Pages#index</h1>
+
+<%= form_for @user, :url => '', :method => :post do |f| %>
+  <%=f.simple_captcha :label => 'Captcha' %>
+  <%= submit_tag %>
+<% end %>
+
+

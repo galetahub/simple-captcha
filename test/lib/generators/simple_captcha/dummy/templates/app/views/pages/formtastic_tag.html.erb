@@ -1,0 +1,8 @@
+
+<h1>Pages#index</h1>
+
+<%= semantic_form_for @user, url: '', :method => :post do |f| %>
+  <%= f.input :capcha, as: :simple_captcha %>
+  <%= f.submit %>
+<% end %>
+
