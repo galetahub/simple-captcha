@@ -114,9 +114,9 @@ module SimpleCaptcha #:nodoc
 
       def simple_captcha_key(key_name = nil)
         if key_name.nil?
-          session[:captcha] ||= SimpleCaptcha::Utils.generate_key(session[:id].to_s, 'captcha')
+          session[:captcha] ||= SimpleCaptcha::Utils.generate_key(session[:session_id].to_s, 'captcha')
         else
-          SimpleCaptcha::Utils.generate_key(session[:id].to_s, key_name)
+          SimpleCaptcha::Utils.generate_key(session[:session_id].to_s, key_name)
         end
       end
   end
