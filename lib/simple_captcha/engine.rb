@@ -15,6 +15,8 @@ module SimpleCaptcha
           end
         when 'mongoid'
           require 'simple_captcha/simple_captcha_data_mongoid.rb'
+        when 'mongomapper'
+          require 'simple_captcha/simple_captcha_data_mongomapper.rb'
         when 'redis'
           require 'simple_captcha/simple_captcha_data_redis.rb'
         else
