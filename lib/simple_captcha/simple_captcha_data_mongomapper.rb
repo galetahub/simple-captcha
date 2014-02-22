@@ -13,13 +13,13 @@ module SimpleCaptcha
       end
           
       def remove_data(key)
-        where(:key => key).delete_all
+        where(:key => key).remove
         clear_old_data(1.hour.ago)
       end
           
       def clear_old_data(time = 1.hour.ago)
         return unless Time === time
-        where(:updated_at.lte => time).delete_all
+        where(:updated_at.lte => time).remove
       end
     end
   end
