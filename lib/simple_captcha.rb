@@ -47,6 +47,10 @@ module SimpleCaptcha
   mattr_accessor :point_size
   @@point_size = 22
 
+  # the expected captcha value for test
+  mattr_accessor :test_captcha
+  @@test_captcha = 'test'
+
   def self.add_image_style(name, params = [])
     SimpleCaptcha::ImageHelpers.image_styles.update(name.to_s => params)
   end

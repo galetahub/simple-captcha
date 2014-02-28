@@ -14,7 +14,7 @@ module SimpleCaptcha #:nodoc
     #   redirect_to :action => "myaction"
     #  end
     def simple_captcha_valid?
-      return true if Rails.env.test?
+      return true if Rails.env.test? and params[:captcha] == SimpleCaptcha.test_captcha
       
       if params[:captcha]
         data = SimpleCaptcha::Utils::simple_captcha_value(params[:captcha_key] || session[:captcha])
