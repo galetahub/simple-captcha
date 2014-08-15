@@ -73,7 +73,9 @@ module SimpleCaptcha #:nodoc
         dst.binmode
 
         #params << "label:#{text} '#{File.expand_path(dst.path)}'"
-        params << "label:#{text} \"#{File.expand_path(dst.path)}\""
+        params << "label:#{text}"
+        params << "-evaluate Uniform-noise #{SimpleCaptcha.noise}"
+        params << "\"#{File.expand_path(dst.path)}\""
 
         SimpleCaptcha::Utils::run("convert", params.join(' '))
 
