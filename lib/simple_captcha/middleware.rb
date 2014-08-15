@@ -32,8 +32,8 @@ module SimpleCaptcha
           #status = 200
           #body = generate_simple_captcha_image(code)
           #headers['Content-Type'] = 'image/jpeg'
-          
-          return send_file(generate_simple_captcha_image(code), :type => 'image/jpeg', :disposition => 'inline', :filename =>  'simple_captcha.jpg')
+
+          send_data(generate_simple_captcha_image(code), :type => 'image/jpeg', :disposition => 'inline', :filename =>  'simple_captcha.jpg')
         end
         
         [status, headers, body]
@@ -54,5 +54,13 @@ module SimpleCaptcha
         
         [status, headers, response_body]
       end
+
+      def send_data(response_body, options = {})
+        status = options[:status] || 200
+        headers = {"Content-Disposition" => "#{options[:disposition]}; filename='#{options[:filename]}'", "Content-Type" => options[:type], 'Content-Transfer-Encoding' => 'binary', 'Cache-Control' => 'private'}
+
+        [status, headers, [response_body]]
+      end
+
   end
 end
