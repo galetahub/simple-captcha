@@ -1,7 +1,7 @@
 
 =SimpleCaptcha
 
-  This repo isn't actively being maintained, you should check the current {official version}[https://github.com/pludoni/simple-captcha] of the gem. 
+This repo isn't actively being maintained, you should check the current {official version}[https://github.com/pludoni/simple-captcha] of the gem. 
 
 SimpleCaptcha is the simplest and a robust captcha plugin. Its implementation requires
 adding up a single line in views and in controllers/models.
