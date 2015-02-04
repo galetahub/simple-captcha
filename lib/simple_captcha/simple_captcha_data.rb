@@ -3,6 +3,8 @@ module SimpleCaptcha
 
     self.table_name = "simple_captcha_data"
 
+    attr_accessible :key
+
     class << self
       def get_data(key)
         data = where(key: key).first || new(key: key)
