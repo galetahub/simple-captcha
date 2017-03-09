@@ -9,6 +9,7 @@ module SimpleCaptcha
 
   autoload :FormBuilder,       'simple_captcha/form_builder'
   autoload :CustomFormBuilder, 'simple_captcha/formtastic'
+  autoload :CaptchaSimpleFormInput, 'simple_captcha/simple_form'
 
 
   autoload :Middleware,        'simple_captcha/middleware'
